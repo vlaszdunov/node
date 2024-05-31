@@ -30,14 +30,14 @@ jobs:
 
     - name: Build Node Images
       run: |
-        docker build . --target XXII --tag ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:22
-        docker build . --target XXI --tag ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:21
         docker build . --target XX --tag ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:20
+        docker build . --target XXI --tag ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:21
+        docker build . --target XXII --tag ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:22
         docker build . --target latest --tag ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:latest
 
     - name: Publish Node Images
       run: |
-        docker push ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:22
-        docker push ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:21
         docker push ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:20
+        docker push ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:21
+        docker push ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:22
         docker push ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:latest
