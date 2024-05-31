@@ -1,0 +1,43 @@
+name: build and push
+run-name: Build and push Node images to GHCR
+
+on:
+  push:
+  schedule:
+    - cron: 0 0 * * *
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-publish:
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{env.REGISTRY}}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build Node Images
+      run: |
+        docker build . --target XXII --tag ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:22
+        docker build . --target XXI --tag ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:21
+        docker build . --target XX --tag ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:20
+        docker build . --target latest --tag ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:latest
+
+    - name: Publish Node Images
+      run: |
+        docker push ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:22
+        docker push ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:21
+        docker push ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:20
+        docker push ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:latest
