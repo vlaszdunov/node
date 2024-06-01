@@ -1,8 +1,8 @@
 # Node.js Docker Images
 
 Avaliable Versions
-| Node 22 | Node 21 | Node 20 | Node latest |
-|-------------|-------------|-------------|---------------|
+| Node latest | Node 22 | Node 21 | Node 20 |
+|-|-|-|-|
 
 ### Using as base image
 If you want to use this images as Base image in your Dockerfile\
